@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+*{
+    box-sizing: border-box;
+}
+
+
+
+/* body {
+  color: white;
+  width: 100dvw;
+  overflow-x: hidden;
+  height: 100%;
+  background: #000;
+  border-color: #3b3b3b;
+  user-select: none;
+} */
+
+/* canvas {
+  touch-action: none;
+} */
+
+.screen-max-width {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  position: relative;
+  max-width: 1120px;
+}
+
+@layer utilities{
+    .heroHeight{
+        @apply h-[calc(100vh-60px)]
+    }
+    .btn{
+        @apply bg-[#2997FF] w-18 text-center translate-y-14 rounded-3xl text-lg px-5 py-2 my-5 cursor-pointer border border-transparent
+    }
+    .hero-title {
+        @apply absolute opacity-0 top-2 md:top-1/6 font-semibold text-3xl text-neutral-400 max-md:mb-10
+      }
+}
