@@ -37,4 +37,19 @@
     .hero-title {
         @apply absolute opacity-0 top-2 md:top-1/6 font-semibold text-3xl text-neutral-400 max-md:mb-10
       }
+    .explore-heading {
+      @apply opacity-0 text-3xl md:text-5xl lg:text-6xl translate-y-20 text-[#86868b] font-semibold
+    }
+    .common-padding {
+      @apply sm:py-32 py-20 sm:px-10 px-5
+    }
+    .explore-iphone {
+      @apply text-5xl lg:text-7xl text-white pl-24 lg:pl-96 font-semibold text-wrap
+    }
+    .explore-text {
+      @apply text-lg text-[#86868b] md:text-xl font-semibold translate-y-[100px] w-[95%] h-[90%]
+    }
+    .footer-text {
+      @apply text-xs text-[#86868b] font-semibold
+    }
 }

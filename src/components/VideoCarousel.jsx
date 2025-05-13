@@ -149,14 +149,14 @@ const VideoCarousel = () => {
     <section className = "overflow-hidden relative bottom-6">
         <div className = "flex lg:ml-40">
             {hightlightsSlides.map((item,i)=>(
-                 <div className = "relative"  id = "slider" key = {item.id}>
+                 <div className = "relative bg-black mr-4 m-auto ml-4 rounded-3xl"  id = "slider" key = {item.id}>
                     <div className = "absolute font-semibold text-xl top-1/6 pl-7">{item.textLists.map((text,i)=>(
                         <p key = {i}>{text}</p>
                     )
                     )}
                     </div>
-                    <div className = "w-[90vw] sm:w-[70vw] md:h-[70vh] sm:h-[50vh] h-[35vh]">
-                        <video className = "rounded-3xl video h-[70vh]" muted playsInline={true} preload="auto"
+                    <div className = "w-[90vw] sm:w-[70vw] md:h-[70vh] sm:h-[50vh] h-[35vh] flex justify-center">
+                        <video  className = "rounded-3xl video w-full object-fill" muted playsInline={true} preload="auto"
                          ref = {(elem)=>(videoRef.current[i] = elem)}
                          onPlay = {()=>setVideo((prev)=>({...prev,isPlaying:true}))}
                          onEnded = {()=>
