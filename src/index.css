@@ -121,4 +121,19 @@ canvas {
   .g_fadeIn {
     @apply opacity-0 translate-y-[100px]
   }
+  .addToCartBtn {
+    @apply border border-blue w-[150px] px-5 py-2 text-xs bg-transparent text-white hover:text-black transition-all hover:bg-white rounded-md mt-7 md:w-40 lg:w-4/6  lg:h-12
+  }
+  .productTitle {
+    @apply font-bold text-white
+  }
+  .cartBadge {
+    @apply absolute w-4 h-4 bg-white text-black rounded-full flex justify-center items-center -bottom-3 -right-2 text-xs
+  }
+  .productImg {
+    @apply rounded-lg
+  }
+  .burgerMenu {
+    @apply w-full bg-black text-white h-[28%] z-50
+  }
 }

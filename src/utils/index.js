@@ -29,6 +29,9 @@ import explore2 from "/assets/images/explore2.jpg";
 import chip from "/assets/images/chip.jpeg";
 import frame from "/assets/images/frame.png";
 
+import burgerMenuIcon from '/assets/images/burgerMenu.svg';
+export const burgerMenu = burgerMenuIcon;
+
 export const heroVideo = hmv;
 export const smallHeroVideo = smallmv;
 export const highlightFirstVideo = highlightFirstmv;
