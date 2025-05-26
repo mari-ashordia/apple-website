@@ -11,7 +11,7 @@ const IPads = () => {
         setProducts();
     }, [])
   return (
-    <main className = "common-padding">
+    <main className = "nav-height">
         <ProductsList products = {ipads}/>
     </main>
   )

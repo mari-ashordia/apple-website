@@ -5,6 +5,8 @@ export const createProductSlice = (set, get) => ({
     selectedProduct: null,
     loading: false,
     error: null,
+    color: "Black",
+    storage: null,
     
     setProducts: async () => {
         set({loading: true}),
@@ -12,7 +14,9 @@ export const createProductSlice = (set, get) => ({
         .then(({data}) => set({products: data, loading: false}))
         .catch(error => set({loading: false, error}))
     },
-    setSelectedProduct: (product) => set({setSelectedProduct: product}),
+    setSelectedProduct: (product) => set({selectedProduct: product}),
     setLoading: (loading) => set({loading}),
-    setError: (error) => set({error})
+    setError: (error) => set({error}),
+    setColor: (color) => set({color}),
+    setStorage: (storage) => set({storage})
 })

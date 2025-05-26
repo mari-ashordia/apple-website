@@ -11,7 +11,7 @@ import highlightFourthmv from "/assets/videos/hightlight-fourth.mp4";
 import exploremv from "/assets/videos/explore.mp4";
 import framemv from "/assets/videos/frame.mp4";
 
-import apple from "/assets/images/apple.svg";
+import apple from "/assets/images/appleWhite.svg";
 import search from "/assets/images/search.svg";
 import bag from "/assets/images/bag.svg";
 import watch from "/assets/images/watch.svg";
@@ -32,6 +32,16 @@ import frame from "/assets/images/frame.png";
 import burgerMenuIcon from '/assets/images/burgerMenu.svg';
 export const burgerMenu = burgerMenuIcon;
 
+import appleBlack from '/assets/images/appleBlack.svg';
+export const appleBlackImg = appleBlack;
+
+import bagBlackIcon from '/assets/images/bagBlack.svg';
+export const bagBlack = bagBlackIcon;
+
+import searchBlackIcon from '/assets/images/searchBlack.svg';
+export const serachBlack = searchBlackIcon;
+
+
 export const heroVideo = hmv;
 export const smallHeroVideo = smallmv;
 export const highlightFirstVideo = highlightFirstmv;
@@ -41,7 +51,7 @@ export const highlightFourthVideo = highlightFourthmv;
 export const exploreVideo = exploremv;
 export const frameVideo = framemv;
 
-export const appleImg = apple;
+export const appleWhiteImg = apple;
 export const searchImg = search;
 export const bagImg = bag;
 export const watchImg = watch;
@@ -58,3 +68,4 @@ export const explore1Img = explore1;
 export const explore2Img = explore2;
 export const chipImg = chip;
 export const frameImg = frame;
+

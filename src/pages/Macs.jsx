@@ -10,7 +10,7 @@ export const Macs = () => {
           setProducts();
       }, [])
   return (
-    <main className = "common-padding">
+    <main className = "nav-height bg-white">
        <ProductsList products = {macs}/>
     </main>
   )

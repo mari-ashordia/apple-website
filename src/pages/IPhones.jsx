@@ -10,8 +10,9 @@ export const IPhones = () => {
           setProducts();
       }, [])
   return (
-    <main className = "common-padding">
+    <main>
         <ProductsList products = {iphones}/>
     </main>
+      
   )
 }

@@ -10,6 +10,7 @@ import { useStore } from './store/useStore';
 import CartDrawer from './components/CartDrawer';
 import { useEffect } from 'react';
 import BurgerMenu from './components/BurgerMenu';
+import { ProductPage } from './pages/ProductPage';
 
 const App = () => {
   const {isCartOpen,isBurgerMenuOpen} = useStore();
@@ -31,6 +32,7 @@ const App = () => {
         <Route path = '/iphones' element = {<IPhones />} />
         <Route path = '/macs' element = {<Macs />} />
         <Route path = '/ipads' element = {<IPads />} />
+        <Route path = '/:product/:id' element = {<ProductPage />}/>
       </Routes >
       <Footer />
     </BrowserRouter>
