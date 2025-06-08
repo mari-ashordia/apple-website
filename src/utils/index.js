@@ -29,9 +29,6 @@ import explore2 from "/assets/images/explore2.jpg";
 import chip from "/assets/images/chip.jpeg";
 import frame from "/assets/images/frame.png";
 
-import burgerMenuIcon from '/assets/images/burgerMenu.svg';
-export const burgerMenu = burgerMenuIcon;
-
 import appleBlack from '/assets/images/appleBlack.svg';
 export const appleBlackImg = appleBlack;
 
@@ -39,7 +36,13 @@ import bagBlackIcon from '/assets/images/bagBlack.svg';
 export const bagBlack = bagBlackIcon;
 
 import searchBlackIcon from '/assets/images/searchBlack.svg';
-export const serachBlack = searchBlackIcon;
+export const searchBlack = searchBlackIcon;
+
+import upArrowIcon from '/assets/images/upArrow.svg';
+export const upArrow = upArrowIcon;
+
+import downArrowIcon from '/assets/images/downArrow.svg';
+export const downArrow = downArrowIcon;
 
 
 export const heroVideo = hmv;

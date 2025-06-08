@@ -21,6 +21,9 @@ export const createCartSlice = (set, get) => ({
         else
             set({cart: get().cart.filter((item) => item.id !== id)});
     },
+    removeProductFromCart : (id) => {
+        set({cart: get().cart.filter((item) => item.id !== id )});
+    },
     clearCart: () => set({cart: []}),
 
     // cart modal methods

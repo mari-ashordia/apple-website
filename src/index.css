@@ -6,8 +6,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: text;
 }
-
 body {
   color: white;
   width: 100dvw;
@@ -17,7 +17,6 @@ body {
   border-color: #3b3b3b;
   user-select: none;
 }
-
 canvas {
   touch-action: none;
 }
@@ -122,7 +121,7 @@ canvas {
     @apply opacity-0 translate-y-[100px]
   }
   .addToCartBtn {
-    @apply border border-[#0CB2D9] w-[150px] px-5 py-2 text-xs bg-transparent text-black hover:text-white transition-all hover:bg-[#0CB2D9] rounded-md mt-7 md:w-40 lg:w-4/6  lg:h-12
+    @apply border border-[#0CB2D9] w-[150px] px-5 py-2 text-xs bg-transparent text-black hover:text-white transition-all hover:bg-[#0CB2D9] rounded-md mt-7 md:w-40 lg:w-4/6  md:h-12
   }
   .productTitle {
     @apply font-bold text-black
@@ -135,5 +134,8 @@ canvas {
   }
   .burgerMenu {
     @apply w-full bg-black text-white h-[28%] z-50
+  }
+  .paginationDiv {
+    @apply text-[rgb(40,40,40)] cursor-pointer h-10 w-10 p-3 flex justify-center items-center border border-gray-100 rounded-lg hover:bg-black hover:text-white
   }
 }

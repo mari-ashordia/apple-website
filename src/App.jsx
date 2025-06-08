@@ -11,17 +11,18 @@ import CartDrawer from './components/CartDrawer';
 import { useEffect } from 'react';
 import BurgerMenu from './components/BurgerMenu';
 import { ProductPage } from './pages/ProductPage';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
-  const {isCartOpen,isBurgerMenuOpen} = useStore();
+  const {isCartOpen,isBurgerMenuOpen,isSearchBarOpen} = useStore();
   useEffect(() => {
     if(window.innerWidth < 760)
-      document.body.style.overflow = isCartOpen ? "hidden" : "scroll-y";
+      document.body.style.overflow = isCartOpen || isSearchBarOpen ? "hidden" : "scroll-y";
     
     return () => {
       document.body.style.overflow = "";
     }
-  }, [isCartOpen])
+  }, [isCartOpen, isSearchBarOpen])
   return (
     <BrowserRouter>
       <Navbar />
@@ -35,6 +36,7 @@ const App = () => {
         <Route path = '/:product/:id' element = {<ProductPage />}/>
       </Routes >
       <Footer />
+      {isSearchBarOpen && <SearchBar />}
     </BrowserRouter>
   )
 }
