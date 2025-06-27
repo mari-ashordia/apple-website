@@ -1,17 +1,17 @@
 import React from 'react'
 import ProductsList from '../components/ProductsList'
-import { useStore } from '../store/useStore';
 import { useEffect } from 'react';
+import { useSessionStore } from '../store/useSessionStore';
 
 export const IPhones = () => {
-  const {products, setProducts} = useStore();
-  const iphones = products.filter((item) => item.category === "iPhone")
+  const {products, setProducts} = useSessionStore();
+  const iphones = products.filter((item) => item.category === "iPhone");
       useEffect(() => {
-          setProducts();
+          setProducts('products');
       }, [])
   return (
     <main>
-        <ProductsList products = {iphones}/>
+        <ProductsList products = {iphones} />
     </main>
       
   )

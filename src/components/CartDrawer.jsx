@@ -1,9 +1,9 @@
 import React from 'react'
-import { useStore } from '../store/useStore';
 import { Link } from 'react-router-dom';
+import { useLocalStore } from '../store/useLocalStore';
 
 const CartDrawer = () => {
-    const {isCartOpen, cart, closeCart, addToCart, removeFromCart, removeProductFromCart,clearCart} = useStore();
+    const {isCartOpen, cart, closeCart, addToCart, removeFromCart, removeProductFromCart,clearCart} = useLocalStore();
   return (
     <div className = "text-black">
         <div 

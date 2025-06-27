@@ -85,3 +85,26 @@ import {
     "Legal",
     "Site Map",
   ];
+
+  export const productModels = [
+    "iPhone 16",
+    "iPhone 16 Pro",
+    "iPhone 16 Pro Max",
+    "iPhone 16e",
+    "iPhone 15",
+    "iPhone 14",
+    "iPad Air 13-inch",
+    "iPad Air 11-inch",
+    "iPad Air",
+    "iPad Pro",
+    "iPad Mini",
+    "iPad 10",
+    "MacBook Air 15-inch Apple M4 chip",
+    "MacBook Air 13-inch Apple M4 chip",
+    "MacBook Pro 14-inch Apple M4 Pro chip",
+    "MacBook Pro 16-inch Apple M4 Pro chip",
+    "MacBook Air 13-inch M3",
+    "MacBook Air 15-inch M3",
+    "MacBook Air 13-inch M2",
+    "MacBook Air 13-inch M1"
+  ]

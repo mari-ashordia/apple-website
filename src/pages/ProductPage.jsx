@@ -1,10 +1,11 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useStore } from '../store/useStore';
+import { useSessionStore } from '../store/useSessionStore';
+import { getUniqueValues } from '../utils/getUniqueValues';
 
 export const ProductPage = () => {
 
-    const {selectedProduct, color, setColor, storage, setStorage} = useStore();
+    const {selectedProduct, color, setColor, storage, setStorage} = useSessionStore();
     const {
         name,
         price,
@@ -19,6 +20,8 @@ export const ProductPage = () => {
         os,
         inStock
     } = selectedProduct;
+
+    const {uniqueColors, uniqueStorages, setUniqueColorsOrStorages} = useSessionStore();
 
 
   return (

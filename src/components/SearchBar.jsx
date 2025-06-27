@@ -1,22 +1,17 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useStore } from '../store/useStore';
+import { useSessionStore } from '../store/useSessionStore';
 
 const SearchBar = () => {
-    // const {searchValue, setSearchValue, searchedProducts, setSearchedProducts} = useStore(state => ({
-    //     searchValue: state.searchValue, 
-    //     setSearchValue: state.setSearchValue,
-    //     searchedProducts: state.searchedProducts,
-    //     setSearchedProducts: state.setSearchedProducts
-    // }));
-    const [visibleProducts, setVisibleProducts] = useState();
-    const closeSearchBar = useStore(state => state.closeSearchBar);
-    const products = useStore(state => state.products);
-    const setSelectedProduct = useStore(state => state.setSelectedProduct);
+    const closeSearchBar = useSessionStore(state => state.closeSearchBar);
+    const products = useSessionStore(state => state.products);
+    const setSelectedProduct = useSessionStore(state => state.setSelectedProduct);
+    const setSearchedProducts = useSessionStore(state => state.setSearchedProducts);
+    const searchedProducts = useSessionStore(state => state.searchedProducts);
 
-    const [searchValue, setSearchValue] = useState();
-
+    const [searchValue, setSearchValue] = useState("");
+    
 
     // useEffect(() => setSearchedProducts(),[searchValue])
 
@@ -41,7 +36,7 @@ const SearchBar = () => {
     // }, [])
 
   return (
-    <div className = "bg-white fixed inset-0 z-50 text-[#404040] overflow-y-auto md:bottom-auto md:top-[70px] md:bg-white md:w-screen md:h-[70vh]">
+    <div className = {`bg-black fixed inset-0 z-50 transition-opacity text-[#404040] overflow-y-auto md:bottom-auto md:top-[70px] md:bg-white md:w-screen ${searchValue !== "" ? "md:h-[70vh]" : "md:h-[30vh]"}`}>
           <div className = "flex justify-between items-baseline mr-4 lg:px-[235px]">
             <div className = "flex justify-start gap-3 items-baseline pt-7 px-7">
                 <svg
@@ -57,25 +52,31 @@ const SearchBar = () => {
                     fillOpacity="0.8"
                 />
                 </svg>
-                <input className = "text-3xl font-semibold placeholder-[#797777] focus:outline-none w-[40vw]" placeholder='Search' value = {searchValue} onChange = {e => setSearchValue(e.target.value)}/>
+                <input className = "text-3xl font-semibold placeholder-[#797777] focus:outline-none w-[40vw]" placeholder='Search' value = {searchValue} onChange = {e => {setSearchValue(e.target.value); setSearchedProducts(e.target.value)}}/>
             </div>
-            <div className = "text-2xl cursor-pointer ml-6 md:mr-5" onClick = {() => closeSearchBar()}>
-                X
+            <div className = "text-4xl cursor-pointer ml-6 md:mr-5" onClick = {() => closeSearchBar()}>
+                &times;
             </div>
           </div>
+
           <div className = "mt-12 mb-7 px-8 flex flex-col items-start md:items-center">
                 <div className = "md:grid md:grid-cols-3 lg:grid-cols-4 gap-3 ">
-                    {products.slice(0, visibleProducts).map((item, i) => {
+                    {searchedProducts.length != "" && (
+                        searchedProducts.slice(0,12).map((item, i) => {
                         const lowerCaseName = item.name.toLowerCase();
                         const startIndex = lowerCaseName.indexOf(searchValue);
                         const endIndex = startIndex + searchValue.length;
                         const searchedPart = item.name.slice(startIndex, endIndex);
                         const start = item.name.slice(0, startIndex);
                         const end = item.name.slice(endIndex);
+
+                        const includesColorBoolean = item.colors.map((color) => item.name.endsWith(color));
+                        const productImageIndex = includesColorBoolean.findIndex(val => val === true);
+
                             return (<div key = {i}>
                                 <div className = "flex items-center gap-4">
                                     <Link to = {`/${item.category}/${item.id}`}>
-                                        <img onClick = {() => {closeSearchBar(); setSelectedProduct(item)}} src = {item.image[0]} alt = {item.name} width = {100} height = {100} className = "cursor-pointer"/>
+                                        <img onClick = {() => {closeSearchBar(); setSelectedProduct(item)}} src = {item.image[productImageIndex]} alt = {item.name} width = {100} height = {100} className = "cursor-pointer"/>
                                     </Link>
                                     <div>
                                         <Link to = {`/${item.category}/${item.id}`}>
@@ -85,14 +86,13 @@ const SearchBar = () => {
                                     </div>
                                 </div>
                             </div>)
-                    })}
+                    }))}
                 </div>
-                {/* {
-                    // searchedProducts.length > 0 && 
-                <div className = "m-auto relative -bottom-2">
-                    <p onClick = {() => navigateFunc()} className = "mt-7 text-lg font-semibold underline tracking-wider cursor-pointer mb-3">Show all products</p>
-                </div>
-                } */}
+                {searchedProducts.length > 12 &&  
+                    <div className = "m-auto relative -bottom-2">
+                        <Link><p onClick = {() => closeSearchBar()} className = "mt-7 text-lg font-semibold underline tracking-wider cursor-pointer mb-3">Show all products</p></Link>
+                    </div>
+                }
             </div>
     </div>
   )

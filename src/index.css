@@ -133,7 +133,7 @@ canvas {
     @apply rounded-lg
   }
   .burgerMenu {
-    @apply w-full bg-black text-white h-[28%] z-50
+    @apply w-full bg-black text-white z-50
   }
   .paginationDiv {
     @apply text-[rgb(40,40,40)] cursor-pointer h-10 w-10 p-3 flex justify-center items-center border border-gray-100 rounded-lg hover:bg-black hover:text-white

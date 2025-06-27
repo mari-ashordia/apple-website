@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { useStore } from '../store/useStore'
 import ProductsList from '../components/ProductsList'
+import { useSessionStore } from '../store/useSessionStore'
 
 const IPads = () => {
-    const {products, setProducts } = useStore();
-    const ipads = products.filter((item) => item.category === "iPad")
+    const {products, setProducts } = useSessionStore();
+    const ipads = products.filter((item) => item.category === "iPad");
 
     useEffect(() => {
-        setProducts();
+        setProducts('productsIpadsMacs');
     }, [])
   return (
-    <main className = "nav-height">
+    <main className = "min-[nav-height]">
         <ProductsList products = {ipads}/>
     </main>
   )

@@ -1,21 +1,21 @@
 import { appleWhiteImg,appleBlackImg, bagImg, searchImg, bagBlack, searchBlack } from '../utils';
 import { navLists } from '../constants';
 import { Link } from 'react-router-dom';
-import { useStore } from '../store/useStore';
 import { useLocation } from 'react-router-dom';
-import SearchBar from './SearchBar';
+import { useLocalStore } from '../store/useLocalStore';
+import { useSessionStore } from '../store/useSessionStore';
 
 const Navbar = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
-  const cart = useStore((state) => state.cart);
-  const toggleCart = useStore(state => state.toggleCart);
+  const {cart, toggleCart} = useLocalStore();
+
+  const {toggleBurgerMenu, openSearchBar} = useSessionStore();
+
   const cartProductsQuantity = cart.reduce((total, currentValue) => {
     return total + currentValue.quantity;
   },0);
-
-  const {isBurgerMenuOpen, openBurgerMenu, closeBurgerMenu, toggleBurgerMenu, isSearchBarOpen, openSearchBar} = useStore();
   
   return (
     <header className={`w-full py-5 sm:px-10 px-5 ${isHome ? "bg-black" : "bg-white"}`}>

@@ -1,10 +1,10 @@
 import React from 'react'
 import { navLists } from '../constants'
 import { Link } from 'react-router-dom'
-import { useStore } from '../store/useStore'
+import { useSessionStore } from '../store/useSessionStore'
 
 const BurgerMenu = () => {
-    const {isBurgerMenuOpen,closeBurgerMenu} = useStore();
+    const {isBurgerMenuOpen,closeBurgerMenu} = useSessionStore();
   return (
     <>
         <div className = {`bg-black bg-opacity-50 fixed z-10 inset-0 top-[70px] ${isBurgerMenuOpen ? "opacity-100" : "opacity-0"}`}/>
