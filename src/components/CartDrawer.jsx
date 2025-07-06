@@ -4,6 +4,15 @@ import { useLocalStore } from '../store/useLocalStore';
 
 const CartDrawer = () => {
     const {isCartOpen, cart, closeCart, addToCart, removeFromCart, removeProductFromCart,clearCart} = useLocalStore();
+
+    const cartTotalPrice = cart.reduce((prev, current) => {
+        return prev + current.quantity * current.price;
+    }, 0)
+
+    const cartTotalProducts = cart.reduce((prev, current) => {
+        return prev + current.quantity;
+    }, 0)
+
   return (
     <div className = "text-black">
         <div 
@@ -14,7 +23,7 @@ const CartDrawer = () => {
         <div className = {`overflow-y-auto overflow-x-hidden fixed inset-0 ${cart.length > 0 ? 'h-[73vh]' : 'h-screen'} w-screen px-3 py-3 lg:w-[400px] lg:inset-auto lg:top-0 lg:right-0 bg-white flex flex-col z-20`}>
             <div>
                 <div className = "flex justify-between">
-                    <p className = "my-3 font-semibold">CART({cart.length})</p>
+                    <p className = "my-3 font-semibold">CART({cartTotalProducts})</p>
                     <p onClick = {() => closeCart()} className = " relative max-lg:right-4 font-semibold text-md cursor-pointer">X</p>
                 </div>
                 <hr className = "border-black"/>
@@ -47,7 +56,7 @@ const CartDrawer = () => {
             <div className = {`${cart.length === 0 && 'hidden'} fixed bottom-0 right-0 h-[27vh] max-sm:px-4 max-sm:pl-7 w-screen lg:w-[400px] md:h-[30vh] bg-white border-t border-black`}>
                 <div className = "flex justify-between p-4 md:px-6">
                     <p className = "text-sm font-semibold">Total</p>
-                    <p className = "text-sm font-semibold">${cart.reduce((total, {price}) =>total + price , 0)}</p>
+                    <p className = "text-sm font-semibold">${cartTotalPrice}</p>
                 </div>
                 <div className = "flex flex-col m-auto gap-3 w-full md:w-[95vw] lg:w-11/12">
                     <button onClick = {() => {}} className = "bg-black text-white p-4 hover:opacity-70">CHECKOUT</button>

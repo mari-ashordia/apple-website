@@ -5,9 +5,9 @@ import { useSessionStore } from '../store/useSessionStore';
 const useDeepCompareEffect = (dependency, products, setFilteredProductsByFeatures) => {
     const prevDepRef = useRef();
 
+    const {modelCheck} = useSessionStore();
     const {colorCheck} = useSessionStore();
     const {storageCheck} = useSessionStore();
-    console.log(colorCheck, storageCheck);
   
     useEffect(() => {
       if(!isEqual(prevDepRef,dependency)) prevDepRef.current = dependency;
@@ -16,11 +16,19 @@ const useDeepCompareEffect = (dependency, products, setFilteredProductsByFeature
       const filteredProducts = [];
       let singleColor = null;
       let singleStorage = null;
+      let singleModel = null;
       products.forEach(product => {
+        if(dependency === modelCheck){
+            for(let index in featuresToFilter) {
+              singleModel = featuresToFilter[index];
+              const endsOrNot = product.name.includes(singleModel);
+              endsOrNot && filteredProducts.push(product);
+          }
+        }
         if(dependency === colorCheck){
             for(let index in featuresToFilter) {
               singleColor = featuresToFilter[index];
-              const endsOrNot = product.name.endsWith(singleColor);
+              const endsOrNot = product.name.includes(singleColor);
               endsOrNot && filteredProducts.push(product);
           }
         }

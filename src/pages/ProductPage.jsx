@@ -6,6 +6,7 @@ import { getUniqueValues } from '../utils/getUniqueValues';
 export const ProductPage = () => {
 
     const {selectedProduct, color, setColor, storage, setStorage} = useSessionStore();
+    console.log("selected Product: ",selectedProduct);
     const {
         name,
         price,
@@ -21,6 +22,10 @@ export const ProductPage = () => {
         inStock
     } = selectedProduct;
 
+    const includesColorBoolean = colors.map((color) => name.endsWith(color));
+    const productImageIndex = includesColorBoolean.findIndex(val => val === true);
+    
+
     const {uniqueColors, uniqueStorages, setUniqueColorsOrStorages} = useSessionStore();
 
 
@@ -28,7 +33,7 @@ export const ProductPage = () => {
     <main className = "bg-white text-black -mt-10 -mb-10 flex flex-col">
         <section className = "flex flex-col md:flex-row items-center text-center sm:mx-20 sm:my-10 sm:gap-10 sm:text-left md:nav-height">
             <div className = "md:w-7/12 lg:w-6/12">
-                <img src = {image[0]}/>
+                <img src = {image[productImageIndex]}/>
             </div>
             <div className = "flex flex-col items-center">
                 <h2 className = "text-2xl sm:text-4xl mt-5 mb-4">{name}</h2>

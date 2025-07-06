@@ -4,7 +4,6 @@ export const createCartSlice = (set, get) => ({
 
     addToCart: (product) => {
         const exists = get().cart.find((item) => item.id === product.id);
-        console.log(exists);
         if(exists) {
             set({cart: get().cart.map((item) => {
                 return product.id !== item.id ? item : {...item, quantity: item.quantity + 1}

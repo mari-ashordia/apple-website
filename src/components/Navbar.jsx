@@ -11,7 +11,11 @@ const Navbar = () => {
 
   const {cart, toggleCart} = useLocalStore();
 
-  const {toggleBurgerMenu, openSearchBar} = useSessionStore();
+  const {toggleBurgerMenu, 
+        openSearchBar, 
+        setFilteredProducts, 
+        setFilteredProductsByFeatures,
+        setsortedProducts} = useSessionStore();
 
   const cartProductsQuantity = cart.reduce((total, currentValue) => {
     return total + currentValue.quantity;
@@ -26,7 +30,7 @@ const Navbar = () => {
 
         <div className="flex flex-1 justify-center max-sm:hidden">
           {navLists.map(({name, path}) => (
-            <Link key={name} to = {path} className={`px-5 text-sm cursor-pointer ${isHome ? "text-gray hover:text-white" : "text-[rgb(60,60,60)] hover:text-black"}   transition-all`}>
+            <Link  onClick = {() => {setFilteredProducts([]); setsortedProducts([]);}} key={name} to = {path} className={`px-5 text-sm cursor-pointer ${isHome ? "text-gray hover:text-white" : "text-[rgb(60,60,60)] hover:text-black"}   transition-all`}>
               {name}
             </Link>
           ))}

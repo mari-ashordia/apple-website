@@ -1,19 +1,15 @@
-import React from 'react'
-import { filterByProductFeature } from '../utils/filterByProductFeature';
 import { useSessionStore } from '../store/useSessionStore';
-import { Link } from 'react-router-dom';
 import { getInitialStorages } from '../utils/getInitialStorages';
 import { getInitialColors } from '../utils/getInitialColors';
-import useDeepCompareEffect from '../utils/useDeepCompareEffect';
 
 const FilterModal2 = ({header, closeFilterModal, results, setCurrentPage}) => {
-    const {products, modelArr, setFilteredProductsByFeatures, selectedFeatures, toggleSelectedFeatures} = useSessionStore();
-    const filterByProductName = filterByProductFeature(products,'name');
-    const filterProductArr = Object.entries(filterByProductName);
-    const filterByProductStorage = filterByProductFeature(products,'storageOptions');
-    const filterStorageArr = Object.entries(filterByProductStorage);
-    const filterByProductColor = filterByProductFeature(products,'colors');
-    const filterColorArr = Object.entries(filterByProductColor);
+    const {products, modelArr, modelCheck, colorCheck, storageCheck, setModelCheck, setColorCheck, setStorageCheck} = useSessionStore();
+    // const filterByProductName = filterByProductFeature(products,'name');
+    // const filterProductArr = Object.entries(filterByProductName);
+    // const filterByProductStorage = filterByProductFeature(products,'storageOptions');
+    // const filterStorageArr = Object.entries(filterByProductStorage);
+    // const filterByProductColor = filterByProductFeature(products,'colors');
+    // const filterColorArr = Object.entries(filterByProductColor);
 
   return (
     <div>
@@ -33,7 +29,7 @@ const FilterModal2 = ({header, closeFilterModal, results, setCurrentPage}) => {
             {header === "MODEL" && (modelArr.map((model) => (
                 <div>
                     <hr className = "w-screen absolute left-0 border-[#dbd9d9]"/>
-                    <div onClick = {()=> {toggleSelectedFeatures(model)}} className = {`${selectedFeatures.includes(model) && 'bg-[rgb(245,245,245)] border-y border-gray-500'} cursor-pointer py-3`}>
+                    <div onClick = {()=> {setModelCheck(model)}} className = {`${modelCheck.includes(model) && 'bg-[rgb(245,245,245)]'} cursor-pointer py-3`}>
                         <p className = "text-gray-600 uppercase text-sm">{model}</p>
                     </div>
                     
@@ -42,7 +38,7 @@ const FilterModal2 = ({header, closeFilterModal, results, setCurrentPage}) => {
             {header === "STORAGE" && (Object.keys(getInitialStorages(products)).map((storage) => (
                 <div>
                     <hr className = "w-screen absolute left-0 border-[#dbd9d9]"/>
-                    <div onClick = {()=> {toggleSelectedFeatures(storage)}} className = "cursor-pointer py-3">
+                    <div onClick = {()=> {setStorageCheck(storage)}} className = {`${storageCheck.includes(storage) && 'bg-[rgb(245,245,245)]'} cursor-pointer py-3`}>
                         <p className = "text-gray-600 uppercase text-sm">{storage}</p>
                     </div>
 
@@ -51,7 +47,7 @@ const FilterModal2 = ({header, closeFilterModal, results, setCurrentPage}) => {
             {header === "COLOR" && (Object.keys(getInitialColors(products)).map((color) => (
                 <div>
                     <hr className = "w-screen absolute left-0 border-[#dbd9d9]"/>
-                    <div onClick = {()=> {toggleSelectedFeatures(color)}} className = "cursor-pointer py-3">
+                    <div onClick = {()=> {setColorCheck(color)}} className = {`${colorCheck.includes(color) && 'bg-[rgb(245,245,245)]'} cursor-pointer py-3`}>
                         <p className = "text-gray-600 uppercase text-sm">{color}</p>
                     </div>
 

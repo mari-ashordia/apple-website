@@ -1,8 +1,12 @@
 import React from 'react'
 import LoadingWrapper from './LoadingWrapper';
 import { Link } from 'react-router-dom';
+import { useSessionStore } from '../store/useSessionStore';
+import { useLocalStore } from '../store/useLocalStore';
 
 const ProductsMapping = ({array, loading, cart}) => {
+    const {setSelectedProduct} = useSessionStore();
+    const {addToCart, removeFromCart} = useLocalStore();
   return (
         array.map((product) => {
             const {id, name, description, price, image,

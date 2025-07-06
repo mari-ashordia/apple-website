@@ -3,12 +3,12 @@ import ProductsList from '../components/ProductsList'
 import { useSessionStore } from '../store/useSessionStore'
 
 const IPads = () => {
-    const {products, setProducts } = useSessionStore();
+    const {products, setProducts, setFilteredProducts } = useSessionStore();
     const ipads = products.filter((item) => item.category === "iPad");
-
     useEffect(() => {
         setProducts('productsIpadsMacs');
     }, [])
+    
   return (
     <main className = "min-[nav-height]">
         <ProductsList products = {ipads}/>

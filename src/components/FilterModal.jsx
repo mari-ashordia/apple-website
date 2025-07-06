@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import { useSessionStore } from '../store/useSessionStore';
 import FilterModal2 from './FilterModal2';
 
@@ -7,7 +6,7 @@ import FilterModal2 from './FilterModal2';
 const FilterModal = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterHeader, setFilterHeader] = useState();
-    const {products, closeFilterModal} = useSessionStore();
+    const {products, closeFilterModal, clearSelectedFeatures, setFilteredProducts, removeChecks} = useSessionStore();
     let results = 0;
     // const path = useLocation();
     // if(path.pathname.includes('/iphones')){
@@ -20,6 +19,11 @@ const FilterModal = () => {
     //     results = products.filter((item) => item.category === "mac").length;
     // }
 
+    // const filterFunc = () => {
+    //     const filtered = products.filter(({name}) => selectedFeatures.every((feature) => name.toLowerCase().includes(feature.toLowerCase())));
+    //     return filtered;
+    // }
+
   return (
     <div className = "flex flex-col inset-0 fixed w-screen h-screen z-50 bg-white text-black px-4 py-5">
         
@@ -30,7 +34,7 @@ const FilterModal = () => {
                 <h1 className = "font-semibold mb-10">FILTER</h1>
                 <div className = "flex gap-3 items-center pr-3">
                     <p className = "text-gray-600 font-light">{`${results} Results`}</p>
-                    <p onClick = {() => closeFilterModal()} className = "text-4xl cursor-pointer">&times;</p>
+                    <p  onClick = {() => closeFilterModal()} className = "text-4xl cursor-pointer" >&times;</p>
                 </div>
             </div>
                     <div>
@@ -74,8 +78,14 @@ const FilterModal = () => {
         <div className = "fixed bottom-5 w-screen left-0">
             <hr className = "mb-7 border-gray-900"/>
             <div className = "flex justify-center gap-3">
-                <button className = "bg-white text-black py-3 border w-[40vw] font-semibold">CLEAR</button>
-                <button className = "bg-black text-white py-3 border w-[40vw] font-semibold">DONE</button>
+                <button onClick = {() => {removeChecks(); setFilteredProducts();}} className = "bg-white text-black py-3 border w-[40vw] font-semibold">CLEAR</button>
+                <button 
+                    onClick = {() => {
+                        closeFilterModal();
+                        setFilteredProducts();
+                    }} 
+                    className = "bg-black text-white py-3 border w-[40vw] font-semibold">DONE
+                </button>
             </div>
         </div>
         

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useSessionStore } from '../store/useSessionStore';
 
 const SearchBar = () => {
@@ -9,31 +9,24 @@ const SearchBar = () => {
     const setSelectedProduct = useSessionStore(state => state.setSelectedProduct);
     const setSearchedProducts = useSessionStore(state => state.setSearchedProducts);
     const searchedProducts = useSessionStore(state => state.searchedProducts);
+    const clearSearchedProducts = useSessionStore(state => state.clearSearchedProducts);
+    const setFilteredProducts = useSessionStore(state => state.setFilteredProducts);
 
     const [searchValue, setSearchValue] = useState("");
-    
+    console.log("value: ", searchValue, "searched: ", searchedProducts);
 
-    // useEffect(() => setSearchedProducts(),[searchValue])
+    const handleSearchOnScroll = () => {
+        closeSearchBar();
+        clearSearchedProducts();
+    }
+    const navigate = useNavigate();
 
-    // const navigateFunc = () => {
-    //     if(searchedProducts) {
-    //         const category = searchedProducts[0].category;
-    //         category === 'iPhone' ? navigate('/iphones')
-    //              : category === 'iPad' ? navigate('/ipads') : navigate('/macs');
-    //     };
-    //     closeSearchBar();
-    // }
-
-    // useEffect(() => {
-    //     const updateVisibleProducts = () => {
-    //         if(window.innerWidth < 640) setVisibleProducts(5);
-    //         else if(window.innerWidth < 1024) setVisibleProducts(9);
-    //         else setVisibleProducts(12);
-    //     }
-    //     updateVisibleProducts();
-    //     window.addEventListener('resize',updateVisibleProducts);
-    //     return () => window.removeEventListener('resize', updateVisibleProducts);
-    // }, [])
+    useEffect(() => {
+        window.addEventListener('scroll', handleSearchOnScroll);
+        return () => {
+            window.removeEventListener('scroll', handleSearchOnScroll);
+        }
+    }, [])
 
   return (
     <div className = {`bg-black fixed inset-0 z-50 transition-opacity text-[#404040] overflow-y-auto md:bottom-auto md:top-[70px] md:bg-white md:w-screen ${searchValue !== "" ? "md:h-[70vh]" : "md:h-[30vh]"}`}>
@@ -62,7 +55,7 @@ const SearchBar = () => {
           <div className = "mt-12 mb-7 px-8 flex flex-col items-start md:items-center">
                 <div className = "md:grid md:grid-cols-3 lg:grid-cols-4 gap-3 ">
                     {searchedProducts.length != "" && (
-                        searchedProducts.slice(0,12).map((item, i) => {
+                        searchedProducts.map((item, i) => {
                         const lowerCaseName = item.name.toLowerCase();
                         const startIndex = lowerCaseName.indexOf(searchValue);
                         const endIndex = startIndex + searchValue.length;
@@ -76,11 +69,11 @@ const SearchBar = () => {
                             return (<div key = {i}>
                                 <div className = "flex items-center gap-4">
                                     <Link to = {`/${item.category}/${item.id}`}>
-                                        <img onClick = {() => {closeSearchBar(); setSelectedProduct(item)}} src = {item.image[productImageIndex]} alt = {item.name} width = {100} height = {100} className = "cursor-pointer"/>
+                                        <img onClick = {() => {closeSearchBar(); setSelectedProduct(item); clearSearchedProducts()}} src = {item.image[productImageIndex]} alt = {item.name} width = {100} height = {100} className = "cursor-pointer"/>
                                     </Link>
                                     <div>
                                         <Link to = {`/${item.category}/${item.id}`}>
-                                            <p onClick = {() => {closeSearchBar(); setSelectedProduct(item)}} className = {`text-gray-900 font-semibold cursor-pointer`}>{start}<span className = "text-teal">{searchedPart}</span>{end}</p>
+                                            <p onClick = {() => {closeSearchBar(); setSelectedProduct(item); clearSearchedProducts()}} className = {`text-gray-900 font-semibold cursor-pointer`}>{start}<span className = "text-teal">{searchedPart}</span>{end}</p>
                                         </Link>
                                         <p className = "font-semibold">${item.price}</p>
                                     </div>
@@ -88,14 +81,10 @@ const SearchBar = () => {
                             </div>)
                     }))}
                 </div>
-                {searchedProducts.length > 12 &&  
-                    <div className = "m-auto relative -bottom-2">
-                        <Link><p onClick = {() => closeSearchBar()} className = "mt-7 text-lg font-semibold underline tracking-wider cursor-pointer mb-3">Show all products</p></Link>
-                    </div>
-                }
             </div>
     </div>
   )
 }
 
 export default SearchBar
+

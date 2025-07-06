@@ -22,12 +22,11 @@ export const useSessionStore = create(persist((set, get) =>({
     partialize: (state) => ({
         isBurgerMenuOpen: state.isBurgerMenuOpen,
         isFilterMenuOpen: state.isFilterMenuOpen,
-        isSearchBarOpen: state.isSearchBarOpen,
-        // currentPage: state.currentPage,
         priceRange: state.priceRange,
         filteredproducts: state.filteredproducts,
         isFilterChecked: state.isFilterChecked,
         color: state.color,
         storage: state.storage,
+        selectedProduct: state.selectedProduct
     })
 }))

@@ -34,33 +34,30 @@ const ProductsList = ({products}) => {
         setIsFilterChecked,
         priceRange, 
         setPriceRange,
-        filteredProductsByFeatures,
-        setFilteredProductsByFeatures,
         sortedProducts,
         colorCheck,
         storageCheck,
         setColorCheck,
         setStorageCheck,
+        setModelCheck,
+        modelCheck,
         removeChecks,
         modelArr,
-        setModelArr
+        setModelArr,
+        searchedProducts
     } = useSessionStore();
     const {model, storage, color} = isFilterMenuOpen; 
     
     const isMediumScreen = useMediaQuery('(max-width: 1024px)');
     const isLargeScreen = useMediaQuery('(min-width: 1025px)');
 
-
     // pagination
-    const totalPages = isFilterChecked ? Math.ceil(filteredProducts.length / productsPerPage) :
-        filteredProductsByFeatures.length > 0 ? Math.ceil(filteredProductsByFeatures.length / productsPerPage) :
-        sortedProducts.length > 0 ? Math.ceil(sortedProducts.length / productsPerPage) :
-         Math.ceil(products.length / productsPerPage);
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+        // sortedProducts.length > 0 ? Math.ceil(sortedProducts.length / productsPerPage) :
+        //  Math.ceil(products.length / productsPerPage);
     const startIndex = ( currentPage - 1 ) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    const currentProducts = isFilterChecked ? filteredProducts.slice(startIndex, endIndex) : 
-        filteredProductsByFeatures.length > 0 ? filteredProductsByFeatures.slice(startIndex, endIndex) :
-        sortedProducts.length > 0 ? sortedProducts.slice(startIndex, endIndex) :products.slice(startIndex, endIndex);
+    const currentProducts =  sortedProducts.length > 0 ? sortedProducts.slice(startIndex, endIndex) : filteredProducts.slice(startIndex, endIndex);
 
     // price filter details
     const minPrice = 0;
@@ -68,7 +65,7 @@ const ProductsList = ({products}) => {
 
     useEffect(() => {
         window.scrollTo( {top: 0, behaviour: 'smooth'});
-    }, [currentPage, isFilterChecked]);
+    }, [currentPage, isFilterChecked, modelCheck, colorCheck, storageCheck]);
 
     const handlePrevPage = () => currentPage !== 1 && setCurrentPage(currentPage - 1);
     const handleNextPage = () => currentPage !== totalPages && setCurrentPage(currentPage + 1);
@@ -78,23 +75,27 @@ const ProductsList = ({products}) => {
     // const filterByProductColor = filterByProductFeature(products,'colors');
     const filterArr = Object.entries(filterByProductName);
 
-    // const uniqueColors = getUniqueValues(products, 'colors');
-    // const uniqueStorages = getUniqueValues(products, 'storageOptions');
-
-    // const initialValue = uniqueColors.reduce((prev, current) => ({...prev, [current]: false}), {});
-    // const [colorCheck, setColorCheck] = useState(initialValue);
-    // const [storageCheck, setStorageCheck] = useState(initialValue);
-
-    const handleColorChange = (e, color) => {
-        setColorCheck(color,e);
-    }
-    // console.log(colorCheck);
-    const handleStorageChange = (e, storage) => {
-        setStorageCheck(storage,e);
+    const handleModelChange = (model) => {
+        setModelCheck(model);
     }
 
-    useDeepCompareEffect(colorCheck, products, setFilteredProductsByFeatures);
-    useDeepCompareEffect(storageCheck, products, setFilteredProductsByFeatures);
+    const handleColorChange = (color) => {
+        setColorCheck(color);
+    }
+ 
+    const handleStorageChange = (storage) => {
+        setStorageCheck(storage);
+    }
+
+    useEffect(() => {
+        setFilteredProducts();
+    }, [modelCheck, colorCheck, storageCheck, isFilterChecked])
+    const windowScroll = () => {
+        window.scrollTo( {top: 0, behaviour: 'smooth'});
+    }
+    // useDeepCompareEffect(modelCheck, products, setFilteredProducts);
+    // useDeepCompareEffect(colorCheck, products, setFilteredProducts);
+    // useDeepCompareEffect(storageCheck, products, setFilteredProducts);
 
     const location = useLocation();
     const path = location.pathname;
@@ -121,15 +122,12 @@ const ProductsList = ({products}) => {
                         <img onClick = {() => setIsFilterMenuOpen("model")} src = {model ? upArrow : downArrow} width = {20} height= {20} className = "relative left-1 cursor-pointer"/>                    
                     </div>
                     <ul id = "filterList" className = {`${model ? "block" : "hidden"} w-full mt-10`}>
-                        <div className = "flex justify-between pb-3 items-center">
-                            <li>All</li>
-                            <input type = "checkbox" className = "accent-teal w-4 h-4"/>
-                        </div>
+
                         {modelArr.map((model, i) => {
                             return (
                                 <div key = {i} className = {`flex justify-between pb-3 items-center`}>
                                     <li >{model}</li>
-                                    <input type = "checkbox" className = "accent-teal w-4 h-4"/>
+                                    <input type = "checkbox" className = "accent-teal w-4 h-4" value = {modelCheck[model]} onChange={() => {handleModelChange(model); setCurrentPage(1);}}/>
                                 </div>
                             )
                         })}
@@ -147,7 +145,7 @@ const ProductsList = ({products}) => {
                             return(
                                 <div key = {i} className = {`flex justify-between ${i < products.length - 1 && "pb-2"}`}>
                                     <li >{storage}</li>
-                                    <input type = "checkbox" className = "accent-teal w-5 h-5" value = {storageCheck[storage]} onChange={(e) => {handleStorageChange(e, storage); setCurrentPage(1);}}/>
+                                    <input type = "checkbox" className = "accent-teal w-5 h-5" value = {storageCheck[storage]} onChange={() => {handleStorageChange(storage); setCurrentPage(1);}}/>
                                 </div>
                             )})}
                     </ul>
@@ -162,7 +160,7 @@ const ProductsList = ({products}) => {
                         {Object.keys(getInitialColors(products)).map((color, i) => (
                             <div key = {i} className = {`flex justify-between ${i < products.length - 1 && "pb-2"}`}>
                                 <li >{color}</li>
-                                <input type = "checkbox" className = "accent-teal w-5 h-5" value = {colorCheck[color]} onChange={(e) => {handleColorChange(e, color); setCurrentPage(1);}}/>
+                                <input type = "checkbox" className = "accent-teal w-5 h-5" value = {colorCheck[color]} onChange={() => {handleColorChange(color); setCurrentPage(1);}}/>
                             </div>
                         ))}
                     </ul>
@@ -188,9 +186,9 @@ const ProductsList = ({products}) => {
                         <p><span className = "text-gray-400">Price:</span> {` ${priceRange[0]}$ - ${priceRange[1]}$`}</p>
                         <p onClick = {() => {
                             setIsFilterChecked(true);
-                            setFilteredProducts(products);
                             setCurrentPage(1);
-                            }} className = "text-teal cursor-pointer font-semibold hover:bg-teal hover:text-white rounded-lg px-3 py-2">Filter</p>
+                            windowScroll();
+                            }} className = "text-teal cursor-pointer font-semibold hover:bg-teal hover:text-white rounded-lg px-3 py-2">Filter by price</p>
                     </div>
                 </div>
                 {isFilterChecked &&
@@ -198,10 +196,9 @@ const ProductsList = ({products}) => {
                     <div>
                         <p onClick = {() => {
                             setIsFilterChecked(false);
-                            setFilteredProducts([]);
+                            setFilteredProducts(products);
                             setPriceRange([minPrice, maxPrice]);
-                            removeChecks();
-                        }} className = "text-teal text-lg text-center cursor-pointer font-semibold hover:bg-teal hover:text-white rounded-lg px-3 py-2">Remove Filters</p>
+                        }} className = "text-teal text-lg text-center cursor-pointer font-semibold hover:bg-teal hover:text-white rounded-lg px-3 py-2">Remove Price Filter</p>
                     </div>
                 </div>)}
 
@@ -209,11 +206,10 @@ const ProductsList = ({products}) => {
 
             <section className = "flex flex-col items-center justify-center">
                 <div className = "grid grid-cols-3 gap-4 sm:grid-cols-4"> 
-                {filteredProductsByFeatures.length > 0 ? <ProductsMapping array = {currentProducts} loading = {loading} cart = {cart}/> 
-                    :sortedProducts.length > 0 ? <ProductsMapping array = {currentProducts} loading = {loading} cart = {cart}/> : <ProductsMapping array = {currentProducts} loading = {loading} cart = {cart}/>           
-                }
-                
+                    <ProductsMapping array = {currentProducts} loading = {loading} cart = {cart}/>          
                 </div>
+                
+                
 
                 <div className = "mt-10 sm:mt-[100px] md:mt-[50px]">
                     <div className = "flex flex-row gap-1">

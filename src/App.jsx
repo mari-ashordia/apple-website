@@ -16,14 +16,12 @@ import FilterModal from './components/FilterModal';
 import SearchBar from './components/SearchBar';
 
 const App = () => {
-  // const {isCartOpen} = useLocalStore((state) => ({isCartOpen: state.isCartOpen}));
   const {isCartOpen} = useLocalStore();
-  // const {isBurgerMenuOpen, isSearchBarOpen} = useSessionStore((state) => ({
-  //   isBurgerMenuOpen: state.isBurgerMenuOpen,
-  //   isSearchBarOpen: state.isSearchBarOpen,
-  //   hasHydrated: state.hasHydrated
-  // }));
-  const {isBurgerMenuOpen, isSearchBarOpen, isFilterModalOpen} = useSessionStore();
+  const {isBurgerMenuOpen, isSearchBarOpen, isFilterModalOpen, closeFilterModal} = useSessionStore();
+
+  const handleFilterModal = () => {
+    window.innerWidth > 1024 && closeFilterModal();
+  }
 
   useEffect(() => {
     if(window.innerWidth < 760)
@@ -33,6 +31,13 @@ const App = () => {
       document.body.style.overflow = "";
     }
   }, [isCartOpen, isSearchBarOpen])
+
+  useEffect(() => {
+    window.addEventListener('resize', handleFilterModal);
+
+    return () => window.removeEventListener('resize', handleFilterModal);
+  }, []);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -48,7 +53,6 @@ const App = () => {
         <Route path = '/:product/:id' element = {<ProductPage />}/>
       </Routes >
       <Footer />
-      {/* {isSearchBarOpen && <SearchBar />} */}
     </BrowserRouter>
   )
 }
