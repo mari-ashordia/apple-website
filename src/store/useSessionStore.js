@@ -24,7 +24,7 @@ export const useSessionStore = create(persist((set, get) =>({
         isFilterMenuOpen: state.isFilterMenuOpen,
         priceRange: state.priceRange,
         filteredproducts: state.filteredproducts,
-        isFilterChecked: state.isFilterChecked,
+        // isFilterChecked: state.isFilterChecked,
         color: state.color,
         storage: state.storage,
         selectedProduct: state.selectedProduct

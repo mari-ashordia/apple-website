@@ -1,6 +1,5 @@
 import axios from "axios"
-import { getInitialColors } from "../../utils/getInitialColors";
-import { getInitialStorages } from "../../utils/getInitialStorages";
+import { filterHelper } from "../../utils/filterHelper";
 
 export const createProductSlice = (set, get) => ({
     products: [],
@@ -43,27 +42,32 @@ export const createProductSlice = (set, get) => ({
     setSearchValue: (searchValue) => set({searchValue}),
     setSortedProducts: (sortedProducts) => set({sortedProducts}),
     setPriceRange: (range) => set({priceRange: range}),
-    // setFilteredProducts: (products) => set({filteredProducts: products.filter(product => {
+    //  lteredProducts: (products) => set({filteredProducts: products.filter(product => {
     //     if(product.price >= get().priceRange[0] && product.price <= get().priceRange[1]) return product;
     //     })}),
 
 
-    setFilteredProducts: (products) => {
-        if(products) set({filteredProducts: products});
-        if(get().isFilterChecked) set(state => ({filteredProducts: state.filteredProducts.filter(product => {
-            if(product.price >= get().priceRange[0] && product.price <= get().priceRange[1]) return product;
-            })}));
-        if(get().modelCheck.length > 0) set(state => ({filteredProducts: state.filteredProducts.filter(product => get().modelCheck.some(model => 
-            product.name.toLowerCase().includes(model.toLowerCase())
-        ))}));
-        if(get().storageCheck.length > 0) set(state => ({filteredProducts: state.filteredProducts.filter(product => get().storageCheck.some(storage => 
-            product.name.toLowerCase().includes(storage.toLowerCase())
-        ))}));
-        if(get().colorCheck.length > 0) set(state => ({filteredProducts: state.filteredProducts.filter(product => get().colorCheck.some(color => 
-            product.name.toLowerCase().includes(color.toLowerCase())
-        ))}));
+    setFilteredProducts: (products) => set({filteredProducts: products}),
+        // if(get().isFilterChecked) set(state => ({filteredProducts: state.filteredProducts.filter(product => {
+        //     if(product.price >= get().priceRange[0] && product.price <= get().priceRange[1]) return product;
+        //     })}));
+        // if(get().modelCheck.length > 0) set(state => ({filteredProducts: state.products.filter(product => get().modelCheck.some(model => 
+        //     product.name.toLowerCase().includes(model.toLowerCase())
+        // ))}));
+        // if(get().storageCheck.length > 0) set(state => ({filteredProducts: state.products.filter(product => get().storageCheck.some(storage => 
+        //     product.name.toLowerCase().includes(storage.toLowerCase())
+        // ))}));
+        // if(get().colorCheck.length > 0) set(state => ({filteredProducts: state.products.filter(product => get().colorCheck.some(color => 
+        //     product.name.toLowerCase().includes(color.toLowerCase())
+        // ))}));
+        // if(get().modelCheck.length === 0 && get().storageCheck.length === 0 && get().colorCheck.length === 0){
+        //     set(state => ({filteredProducts: state.products}));
+        // };
 
-    },
+        // console.log("modelsss: ",get().products);
+
+    
+    // },
     setModelCheck: (model) => {
         !get().modelCheck.includes(model) ? set(state => ({modelCheck: [...state.modelCheck, model]})) : 
                                         set(state => ({modelCheck: state.modelCheck.filter(item => item !== model)}));

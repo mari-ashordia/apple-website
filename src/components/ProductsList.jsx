@@ -8,14 +8,13 @@ import { useSessionStore } from '../store/useSessionStore';
 import { useLocalStore } from '../store/useLocalStore';
 import FilterBar from './FilterBar';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { ClassNames } from '@emotion/react';
-import { getUniqueValues } from '../utils/getUniqueValues';
 import useDeepCompareEffect from '../utils/useDeepCompareEffect';
 import ProductsMapping from './ProductsMapping';
 import { getInitialStorages } from '../utils/getInitialStorages';
 import { getInitialColors } from '../utils/getInitialColors';
 import SortBar from './SortBar';
 import { productModels } from '../assets/constants';
+import { filterHelper } from '../utils/filterHelper';
 
 const ProductsList = ({products}) => {
     const {addToCart, cart, removeFromCart} = useLocalStore();
@@ -44,7 +43,7 @@ const ProductsList = ({products}) => {
         removeChecks,
         modelArr,
         setModelArr,
-        searchedProducts
+        searchedProducts,
     } = useSessionStore();
     const {model, storage, color} = isFilterMenuOpen; 
     
@@ -86,16 +85,15 @@ const ProductsList = ({products}) => {
     const handleStorageChange = (storage) => {
         setStorageCheck(storage);
     }
-
     useEffect(() => {
-        setFilteredProducts();
-    }, [modelCheck, colorCheck, storageCheck, isFilterChecked])
+        const combinedFilters = filterHelper(products, modelCheck, storageCheck, colorCheck , priceRange, isFilterChecked);
+        setFilteredProducts(combinedFilters);
+        console.log("price: ",priceRange );
+    }, [modelCheck, colorCheck, storageCheck, isFilterChecked, priceRange])
+
     const windowScroll = () => {
         window.scrollTo( {top: 0, behaviour: 'smooth'});
     }
-    // useDeepCompareEffect(modelCheck, products, setFilteredProducts);
-    // useDeepCompareEffect(colorCheck, products, setFilteredProducts);
-    // useDeepCompareEffect(storageCheck, products, setFilteredProducts);
 
     const location = useLocation();
     const path = location.pathname;
